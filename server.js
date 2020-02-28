@@ -12,10 +12,18 @@ const detectCategories = () => {
 
 const detectSounds = (soundsFolder) => {
   let sounds = [];
-  fs.readdirSync(soundsFolder).forEach(file => {
-    sounds.push(file);
-  });
-  return sounds;
+  try {
+    fs.readdirSync(soundsFolder).forEach(file => {
+      sounds.push(file);
+    });
+    console.log('fs() success');
+    return sounds;
+  }
+  catch {
+    console.log('et oui, c\'est l\'erreur de votre vie');
+    sounds = false;
+    return sounds;
+  }
 }
 
 io.on('connection', function(socket){
@@ -33,7 +41,7 @@ io.on('connection', function(socket){
       console.log('catégorie choisie : ' + category);
       const soundsFolder = './public/sounds/' + category;
       let sounds = detectSounds(soundsFolder);
-      socket.emit('sounds', { category: category, sounds: sounds });
+      socket.emit('sounds', sounds);
   });
 
 });

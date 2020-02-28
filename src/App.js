@@ -13,13 +13,16 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Typography from '@material-ui/core/Typography';
 
 //Menu
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import VolumeUpRoundedIcon from '@material-ui/icons/VolumeUpRounded';
+import ErrorIcon from '@material-ui/icons/Error';
+import HomeIcon from '@material-ui/icons/Home';
+import Divider from '@material-ui/core/Divider';
 
 //React-Router
 import {
@@ -28,19 +31,42 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import Home from './Home';
+import NoMatch from './NoMatch';
 
 import SoundsComponent from './SoundsComponent';
 
 export const socket = openSocket('192.168.1.120:8000');
 
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#1b4965',
+    },
+    secondary: {
+      main: '#ee6352',
+    }
+  },
+  typography: {
+    h3: {
+      fontWeight: 500,
+    }
+  }
+});
+
 export function App () {
 
-  const [categories, setCategories] = useState('Aucune categorie détectée.');
+  const [categories, setCategories] = useState(
+    <ListItem button>
+      <ListItemIcon>{<ErrorIcon />}</ListItemIcon>
+      <ListItemText primary='Aucune catégorie détectée.' />
+    </ListItem>
+  );
 
   socket.on('categories', function (categories) {
     console.log('CLIENT : Catégories détectées : ' + categories);
     const categoriesButtons = categories.map((category) =>
-      <Link to={category} key={category}>
+      <Link to={'/category/' + category} key={category}>
         <ListItem button>
           <ListItemIcon>{<VolumeUpRoundedIcon />}</ListItemIcon>
           <ListItemText primary={category} />
@@ -78,6 +104,15 @@ export function App () {
         onKeyDown={toggleDrawer(side, false)}
       >
         <List>
+          <Link to={'/'}>
+            <ListItem button>
+              <ListItemIcon>{<HomeIcon />}</ListItemIcon>
+              <ListItemText primary={'Home'} />
+            </ListItem>
+          </Link>
+        </List>
+        <Divider />
+        <List>
           {categories}
         </List>
       </div>
@@ -108,14 +143,22 @@ export function App () {
   return (
     <Router>
   		<div style={{ padding: 20 }} className="App">
-        <SwipeableTemporaryDrawer />
-        <Container>
-          <Grid container spacing={2}>
-            <Switch>
-              <Route path="/:category" children={<SoundsComponent />} />
-            </Switch>
-          </Grid>
-        </Container>
+        <ThemeProvider theme={theme}>
+          <SwipeableTemporaryDrawer />
+          <Container>
+            <Grid container spacing={2}>
+              <Switch>
+                <Route exact path="/">
+                  <Home />
+                </Route>
+                <Route path="/category/:category" children={<SoundsComponent />} />
+                <Route path="*">
+                  <NoMatch />
+                </Route>
+              </Switch>
+            </Grid>
+          </Container>
+        </ThemeProvider>
   		</div>
     </Router>
 	);
