@@ -1,16 +1,16 @@
-#React-SoundBoard
+# React-SoundBoard
 Disclaimer : *I'm not a dev, I code just for fun so this git might be dirty / not very optimized. Feel free to improve it*.
 
-##How it works?
+## How it works?
 It's extremely simple.
 * To create a category, create a folder in `public/sounds/`.
 * Put your sounds in a folder located in `public/sounds/` (ex: `public/sounds/category 1/`).
 
-###Installation
+### Installation
 `git clone https://github.com/TeeVy/React-SoundBoard && npm install`
 
-###Run
+### Run
 Just run `Run.bat` or open 2 terminal windows (in the root folder) & type `node server` + `npm start`.
 
-###Build
+### Build
 I never tried, lol.
