@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Zoom from '@material-ui/core/Zoom';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { socket } from './App';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import NoMatch from './NoMatch';
 
 function SoundsComponent() {
 
   const { category } = useParams();
-  let history = useHistory();
   const [sounds, setSounds] = useState(
     <Grid item xs={12}>
       <CircularProgress />
@@ -36,10 +36,10 @@ function SoundsComponent() {
         });
         setSounds(soundsButtons);
       } else {
-        history.push("/404");
+        setSounds(<NoMatch />);
       }
     });
-  }, [category,history]);
+  }, [category]);
 
   return (sounds);
 }

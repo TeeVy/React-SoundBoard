@@ -4,13 +4,7 @@ import './App.css';
 import openSocket from 'socket.io-client';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-
-//AppBar
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import Typography from '@material-ui/core/Typography';
+import Header from './Header.js';
 
 //Menu
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
@@ -36,7 +30,7 @@ import NoMatch from './NoMatch';
 
 import SoundsComponent from './SoundsComponent';
 
-export const socket = openSocket('192.168.1.120:8000');
+export const socket = openSocket('localhost:8000');
 
 const theme = createMuiTheme({
   palette: {
@@ -120,15 +114,7 @@ export function App () {
 
     return (
       <div>
-        <AppBar position="fixed">
-          <Toolbar>
-            <IconButton onClick={toggleDrawer('left', true)} edge="start" color="inherit" aria-label="menu">
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6">SoundBoard</Typography>
-          </Toolbar>
-        </AppBar>
-        <Toolbar />
+        <Header toggleDrawer={toggleDrawer} />
         <SwipeableDrawer
           open={state.left}
           onClose={toggleDrawer('left', false)}
