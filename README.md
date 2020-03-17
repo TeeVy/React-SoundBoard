@@ -7,9 +7,9 @@ It's extremely simple.
 * Put your sounds in a folder located in `public/sounds/` (ex: `public/sounds/category 1/`).
 
 ### Installation
-`git clone https://github.com/TeeVy/React-SoundBoard`
-`cd React-Soundboard`
-`npm install`
+* `git clone https://github.com/TeeVy/React-SoundBoard`
+* `cd React-Soundboard`
+* `npm install`
 
 ### Run
 Just run `Run.bat` or open 2 terminal windows (in the root folder) & type `node server` + `npm start`.
