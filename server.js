@@ -1,6 +1,13 @@
 //server.js
-const io = require('socket.io')();
+const express = require('express');
+const app = express();
+const server = require('http').Server(app);
+const io = module.exports.io = require('socket.io')(server);
 const fs = require('fs');
+
+const PORT = process.env.PORT || 8000;
+
+app.use( express.static(__dirname + './build') )
 
 const detectCategories = () => {
   let categories = [];
@@ -46,6 +53,6 @@ io.on('connection', function(socket){
 
 });
 
-const port = 8000;
-io.listen(port);
-console.log('listening on port ', port);
+server.listen(PORT, ()=>{
+  console.log('listening on port ' + PORT);
+});
