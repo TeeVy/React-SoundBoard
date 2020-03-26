@@ -30,7 +30,7 @@ import NoMatch from './NoMatch';
 
 import SoundsComponent from './SoundsComponent';
 
-export const socket = openSocket('localhost:8000');
+export const socket = openSocket('/');
 
 const theme = createMuiTheme({
   palette: {
