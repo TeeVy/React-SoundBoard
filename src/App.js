@@ -30,7 +30,11 @@ import NoMatch from './NoMatch';
 
 import SoundsComponent from './SoundsComponent';
 
-export const socket = openSocket('/');
+let url = openSocket('localhost:8000');
+
+if (process.env.NODE_ENV === 'production') {
+  url =  openSocket('/');
+}
 
 const theme = createMuiTheme({
   palette: {
@@ -149,3 +153,5 @@ export function App () {
     </Router>
 	);
 }
+
+export const socket = url;
